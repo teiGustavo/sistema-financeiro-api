@@ -1,5 +1,5 @@
 {
-  "name": "api-ts",
+  "name": "sistema-financeiro-api",
   "version": "1.0.0",
   "main": "build/index.js",
   "scripts": {

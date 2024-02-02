@@ -4,7 +4,7 @@ import cors from 'cors';
 import 'dotenv/config';
 
 import './shared/services/TranslationsYup';
-import { ExampleRouter } from './routes';
+import { EmpresasRouter, DocumentosRouter, TransacoesRouter } from './routes';
 
 
 const server = express();
@@ -16,6 +16,8 @@ server.use(cors({
 
 server.use(express.json());
 
-server.use(process.env.API_BASE_ENDPOINT || '', ExampleRouter);
+server.use(process.env.API_BASE_ENDPOINT || '', EmpresasRouter);
+server.use(process.env.API_BASE_ENDPOINT || '', DocumentosRouter);
+server.use(process.env.API_BASE_ENDPOINT || '', TransacoesRouter);
 
 export { server };

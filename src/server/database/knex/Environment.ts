@@ -9,7 +9,7 @@ export const development: Knex.Config = {
         port : 3306,
         user : 'root',
         password : 'root',
-        database : 'example_database'
+        database : 'sistema_financeiro'
     },
     migrations: {
         directory: path.resolve(__dirname, '..', 'migrations')

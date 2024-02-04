@@ -1,4 +1,4 @@
-# Repositório Base para API em Typescript
+# API Sistema Financeiro em Typescript
 
 ```shell
 Estrutura padrão da API:

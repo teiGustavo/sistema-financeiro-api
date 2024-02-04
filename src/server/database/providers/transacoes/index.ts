@@ -1,5 +1,6 @@
 import * as create from './Create';
 import * as getAll from './GetAll';
+import * as getDates from './GetDates';
 import * as getById from './GetById';
 import * as updateById from './UpdateById';
 import * as deleteById from './DeleteById';
@@ -9,6 +10,7 @@ import * as count from './Count';
 export const TransacoesProvider = {
     ...create,
     ...getAll,
+    ...getDates,
     ...getById,
     ...updateById,
     ...deleteById,

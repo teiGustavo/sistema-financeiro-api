@@ -15,6 +15,11 @@ TransacoesRouter
     .post(TransacoesController.createValidation, TransacoesController.create);
 
 TransacoesRouter
+    .route('/transacoes/datas')
+    .get(TransacoesController.getDatesValidation, TransacoesController.getDates);
+
+
+TransacoesRouter
     .route('/transacoes/:id')  
     .get(TransacoesController.getByIdValidation, TransacoesController.getById)
     .put(TransacoesController.updateByIdValidation, TransacoesController.updateById)

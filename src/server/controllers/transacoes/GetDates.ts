@@ -15,7 +15,7 @@ interface IQueryProps {
 }
 
 
-export const getAllValidation = validation((getSchema) => ({
+export const getDatesValidation = validation((getSchema) => ({
     query: getSchema<IQueryProps>(yup.object().shape({
         id: yup.number().integer().optional().default(0),
         page: yup.number().optional().moreThan(0),
@@ -25,12 +25,11 @@ export const getAllValidation = validation((getSchema) => ({
 }));
 
 
-export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {
-    const result = await TransacoesProvider.getAll(
+export const getDates = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {
+    const result = await TransacoesProvider.getDates(
         req.query.page || 1,
         req.query.limit || 7,
-        req.query.filter || '',
-        Number(req.query.id || 0)
+        req.query.filter || ''
     );
 
     const count = await TransacoesProvider.count(req.query.filter);

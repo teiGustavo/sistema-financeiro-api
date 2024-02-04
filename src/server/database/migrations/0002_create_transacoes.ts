@@ -10,7 +10,9 @@ export async function up(knex: Knex) {
             table.date('data').notNullable();
             table.decimal('valor', 10, 2).notNullable();
             table.text('descricao').checkLength('>', 3).nullable();
-
+            table.string('tipo', 7).checkLength('>=', 5).checkLength('<=', 7).notNullable().defaultTo('Saída').comment('Expected: Entrada or Saída'); 
+            table.string('situacao', 8).checkLength('>=', 4).checkLength('<=', 8).notNullable().defaultTo('Pendente').comment('Expected: Pago or Pendente');    
+            
             table.integer('documento_id')
                 .unsigned()
                 .notNullable()

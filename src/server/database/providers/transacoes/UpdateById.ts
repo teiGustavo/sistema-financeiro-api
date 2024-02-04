@@ -5,6 +5,10 @@ import { ITransacao } from '../../models';
 
 export const updateById = async (id: number, transacao: Omit<ITransacao, 'id'>): Promise<void | Error> => {
     try {
+        if (!transacao.descricao) {
+            transacao.descricao = 'Sem descrição!';
+        }
+
         const result = await Knex(ETableNames.transacoes)
             .update(transacao)
             .where('id', id);

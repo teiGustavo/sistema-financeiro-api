@@ -15,7 +15,9 @@ export const createValidation = validation((getSchema) => ({
     body: getSchema<IBodyProps>(yup.object().shape({
         data: yup.string().required().min(10, 'Deve seguir o formato \'yyyy-mm-dd\'').max(10, 'Deve seguir o formato \'yyyy-mm-dd\''),
         valor: yup.number().required(),
-        descricao: yup.string().min(3).optional(),
+        descricao: yup.string().min(3).optional().default('Sem descrição!'),
+        tipo: yup.string().min(3).max(7).optional().default('Saída'),
+        situacao: yup.string().min(3).max(8).optional().default('Pendente'),
         documento_id: yup.number().integer().positive().required(),
         empresa_pagadora_id: yup.number().integer().positive().required(),
         empresa_recebedora_id: yup.number().integer().positive().required(),

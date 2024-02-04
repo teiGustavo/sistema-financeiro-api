@@ -5,6 +5,10 @@ import { ITransacao } from '../../models';
 
 export const create = async (transacao: Omit<ITransacao, 'id'>): Promise<number | Error> => {
     try {
+        if (!transacao.descricao) {
+            transacao.descricao = 'Sem descrição!';
+        }
+
         const [result] = await Knex(ETableNames.transacoes)
             .insert(transacao)
             .returning('id');

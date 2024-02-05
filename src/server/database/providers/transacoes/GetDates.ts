@@ -4,7 +4,7 @@ import { Knex } from '../../knex';
 
 interface IDate {
     ano: string;
-    meses: Array<Object>;
+    meses: Array<{mes: string}>;
 }
 
 

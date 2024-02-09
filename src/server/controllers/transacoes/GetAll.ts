@@ -12,6 +12,7 @@ interface IQueryProps {
     page?: number;
     limit?: number;
     filter?: string;
+    order?: string;
 }
 
 
@@ -21,6 +22,7 @@ export const getAllValidation = validation((getSchema) => ({
         page: yup.number().optional().moreThan(0),
         limit: yup.number().optional().moreThan(0),
         filter: yup.string().optional(),
+        order: yup.string().optional(),
     }))
 }));
 
@@ -30,6 +32,7 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
         req.query.page || 1,
         req.query.limit || 7,
         req.query.filter || '',
+        req.query.order || 'id',
         Number(req.query.id || 0)
     );
 

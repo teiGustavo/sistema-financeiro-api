@@ -8,7 +8,7 @@ interface IResultTransacao {
     valor: number;
     descricao: string;
     tipo: string;
-    situacao: string;
+    status: string;
     documento_id: number;
     documento_tipo: string;
     empresa_pagadora_id: number;
@@ -24,7 +24,7 @@ interface IFormattedTransacao {
     valor: number;
     descricao: string;
     tipo: string;
-    situacao: string;
+    status: string;
     documento: {
         id: number,
         tipo: string
@@ -40,7 +40,7 @@ interface IFormattedTransacao {
 }
 
 
-export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<IFormattedTransacao[] | Error> => {
+export const getAll = async (page: number, limit: number, filter: string, order: string, id = 0): Promise<IFormattedTransacao[] | Error> => {
     try {
         const result: IResultTransacao[] = await Knex(`${ETableNames.transacoes} AS T`)
             .select(
@@ -51,7 +51,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
                 Knex.raw('CONCAT("R$ ", REPLACE(REPLACE(REPLACE(FORMAT(T.valor, 2), ".", "|"), ",", "."), "|", ",")) AS valor'), 
                 'T.descricao', 
                 'T.tipo', 
-                'T.situacao', 
+                'T.status', 
                 'T.documento_id', 
                 'D.tipo AS documento_tipo', 
                 'T.empresa_pagadora_id', 
@@ -65,7 +65,8 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
             .where('T.id', Number(id))
             .orWhere('T.data', 'like', `%${filter}%`)
             .offset((page - 1) * limit)
-            .limit(limit);
+            .limit(limit)
+            .orderBy(order);
 
         if (id > 0 && result.every((item) => item.id !== id)) {
             const resultById = await Knex(`${ETableNames.transacoes} AS T`)
@@ -77,7 +78,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
                     Knex.raw('CONCAT("R$ ", REPLACE(REPLACE(REPLACE(FORMAT(T.valor, 2), ".", "|"), ",", "."), "|", ",")) AS valor'), 
                     'T.descricao', 
                     'T.tipo', 
-                    'T.situacao', 
+                    'T.status', 
                     'T.documento_id', 
                     'D.tipo AS documento_tipo', 
                     'T.empresa_pagadora_id', 
@@ -101,7 +102,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
                 valor: transacao.valor,
                 descricao: transacao.descricao,
                 tipo: transacao.tipo,
-                situacao: transacao.situacao,
+                status: transacao.status,
                 documento: {
                     id: transacao.documento_id,
                     tipo: transacao.documento_tipo

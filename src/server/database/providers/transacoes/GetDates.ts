@@ -14,17 +14,14 @@ export const getDates = async (page: number, limit: number, filter: string): Pro
             .select(Knex.raw('DATE_FORMAT(data, "%Y") AS "data"'))
             .distinct()
             .where('data', 'like', `%${filter}%`)
-            .offset((page - 1) * limit)
-            .limit(limit)
             .orderBy('data');
 
         const years = resultYears.map((year) => year.data);
 
         const dates = await Knex(ETableNames.transacoes)
-            .select(Knex.raw('DATE_FORMAT(data, "%Y-%M") as data'))
+            .select(Knex.raw('DATE_FORMAT(data, "%Y-%m") AS data'))
             .distinct()
-            .offset((page - 1) * limit)
-            .limit(limit);
+            .orderBy('data');
 
         const result = years.map((year) => {
             const thisDates = dates.filter((date) => date.data.split('-').at(0) === year);
@@ -40,39 +37,42 @@ export const getDates = async (page: number, limit: number, filter: string): Pro
                         };
                     }
 
-                    const translateMonth = (month: string) => {
-                        switch (month.toUpperCase()) {
-                            case 'JANUARY': 
+                    const convertMonth = (month: string) => {
+                        switch (month) {
+                            case '01': 
                                 return 'Janeiro';
 
-                            case 'FEBRUARY': 
+                            case '02': 
                                 return 'Fevereiro';
 
-                            case 'MARCH': 
+                            case '03': 
                                 return 'Março';
 
-                            case 'APRIL': 
+                            case '04': 
                                 return 'Abril';
 
-                            case 'MAY': 
+                            case '05': 
                                 return 'Maio';
 
-                            case 'JULY': 
+                            case '06': 
                                 return 'Julho';
 
-                            case 'AUGUST': 
+                            case '07': 
+                                return 'Julho';
+
+                            case '08': 
                                 return 'Agosto';
 
-                            case 'SEPTEMBER': 
+                            case '09': 
                                 return 'Setembro';
 
-                            case 'OCTOBER': 
+                            case '10': 
                                 return 'Outubro';
 
-                            case 'NOVEMBER': 
+                            case '11': 
                                 return 'Novembro';
 
-                            case 'DECEMBER': 
+                            case '12': 
                                 return 'Dezembro';
 
                             default:
@@ -81,7 +81,8 @@ export const getDates = async (page: number, limit: number, filter: string): Pro
                     };
 
                     return {
-                        mes: translateMonth(month)
+                        mes: month,
+                        nome: convertMonth(month)
                     };
                 })
             };

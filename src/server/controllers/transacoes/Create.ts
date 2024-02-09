@@ -17,7 +17,7 @@ export const createValidation = validation((getSchema) => ({
         valor: yup.number().required(),
         descricao: yup.string().min(3).optional().default('Sem descrição!'),
         tipo: yup.string().min(3).max(7).optional().default('Saída'),
-        situacao: yup.string().min(3).max(8).optional().default('Pendente'),
+        status: yup.string().min(3).max(9).optional().default('Pendente'),
         documento_id: yup.number().integer().positive().required(),
         empresa_pagadora_id: yup.number().integer().positive().required(),
         empresa_recebedora_id: yup.number().integer().positive().required(),
